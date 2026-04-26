@@ -63,7 +63,7 @@ create policy "anyone can insert" on prompts for insert with check (true);
 
 ## Built with
 
-Antigravity, in 48 hours over a weekend.
+Antigravity, in a giffy.
 
 ## License
 
