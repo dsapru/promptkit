@@ -1,14 +1,18 @@
 import { ImageResponse } from 'next/og'
+import { readFile } from 'node:fs/promises'
+import { join } from 'node:path'
 
 export const alt = 'PromptKit: Shareable, Versionable Prompts for the Gemini API'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
 export default async function Image() {
-  // Fetch Inter SemiBold from Google Fonts CDN
-  const interData = await fetch(
-    'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff'
-  ).then((res) => res.arrayBuffer())
+  // Font bundled locally — no network dependency at build time
+  // Download: curl -sL https://fonts.bunny.net/inter/files/inter-latin-600-normal.woff \
+  //           -o public/fonts/Inter-SemiBold.woff
+  const fontData = await readFile(
+    join(process.cwd(), 'public', 'fonts', 'Inter-SemiBold.woff')
+  )
 
   return new ImageResponse(
     (
@@ -134,7 +138,7 @@ export default async function Image() {
       fonts: [
         {
           name: 'Inter',
-          data: interData,
+          data: fontData,
           style: 'normal',
           weight: 600,
         },
