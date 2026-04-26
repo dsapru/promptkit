@@ -161,8 +161,8 @@ export default function PromptEditor({
               className="w-full"
             />
             <div className="flex justify-between text-[10px] text-muted-foreground/50 mt-1">
-              <span>0 — precise</span>
-              <span>2 — creative</span>
+              <span>0: precise</span>
+              <span>2: creative</span>
             </div>
           </div>
         </div>

@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const description = data?.user_prompt?.slice(0, 160) || 'A shared Gemini prompt'
 
   return {
-    title: `${title} — PromptKit`,
+    title: `${title} | PromptKit`,
     description,
   }
 }

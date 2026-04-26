@@ -10,11 +10,27 @@ const inter = Inter({
   display: 'swap',
 })
 
+const SITE_URL = 'https://promptkit-seven.vercel.app'
+const TITLE = 'PromptKit: Shareable, Versionable Prompts for the Gemini API'
+const DESCRIPTION =
+  'PromptKit gives you shareable URLs, version history, and side-by-side diffs for your Gemini prompts. Like CodePen, for prompts.'
+
 export const metadata: Metadata = {
-  title: 'PromptKit — Shareable, Versionable Prompts for the Gemini API',
-  description:
-    'PromptKit gives you shareable URLs, version history, and side-by-side diffs for your Gemini prompts. Like CodePen, for prompts.',
+  title: TITLE,
+  description: DESCRIPTION,
   keywords: ['Gemini API', 'prompts', 'AI', 'version control', 'shareable prompts'],
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    url: SITE_URL,
+    siteName: 'PromptKit',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: TITLE,
+    description: DESCRIPTION,
+  },
 }
 
 export default function RootLayout({

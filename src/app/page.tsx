@@ -51,7 +51,7 @@ export default function HomePage() {
         setCanSave(true)
       }
     } catch {
-      setError('Network error — could not reach the API')
+      setError('Network error: could not reach the API')
     } finally {
       setIsRunning(false)
     }
@@ -81,7 +81,7 @@ export default function HomePage() {
         router.push(`/p/${data.id}?token=${data.editToken}`)
       }
     } catch {
-      toast.error('Network error — could not save')
+      toast.error('Network error: could not save')
     } finally {
       setIsSaving(false)
     }
@@ -128,7 +128,7 @@ export default function HomePage() {
 
         {/* Two-pane split */}
         <div className="flex flex-col md:flex-row" style={{ minHeight: 'calc(100vh - 220px)' }}>
-          {/* Left pane — editor */}
+          {/* Left pane: editor */}
           <div className="w-full md:w-1/2 border-r border-border/50 min-h-[600px] md:min-h-0">
             <PromptEditor
               config={config}
@@ -142,7 +142,7 @@ export default function HomePage() {
             />
           </div>
 
-          {/* Right pane — output */}
+          {/* Right pane: output */}
           <div className="w-full md:w-1/2 min-h-[400px] md:min-h-0">
             <OutputPanel
               output={output}

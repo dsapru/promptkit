@@ -71,7 +71,7 @@ export default function SharedPromptClient({
         setCanSave(true)
       }
     } catch {
-      setError('Network error — could not reach the API')
+      setError('Network error: could not reach the API')
     } finally {
       setIsRunning(false)
     }
@@ -102,7 +102,7 @@ export default function SharedPromptClient({
         router.push(`/p/${data.id}?token=${data.editToken}`)
       }
     } catch {
-      toast.error('Network error — could not save')
+      toast.error('Network error: could not save')
     } finally {
       setIsSaving(false)
     }
@@ -132,7 +132,7 @@ export default function SharedPromptClient({
         router.push(`/p/${data.id}?token=${data.editToken}`)
       }
     } catch {
-      toast.error('Network error — could not fork')
+      toast.error('Network error: could not fork')
     } finally {
       setIsSaving(false)
     }
@@ -226,7 +226,7 @@ export default function SharedPromptClient({
       <div className="flex flex-col md:flex-row flex-1">
         {/* Two-pane split */}
         <div className="flex flex-col md:flex-row flex-1 max-w-[1400px] w-full mx-auto">
-          {/* Left — editor */}
+          {/* Left: editor */}
           <div className="w-full md:w-1/2 border-r border-border/50 min-h-[600px] md:min-h-0">
             <PromptEditor
               config={config}
@@ -241,7 +241,7 @@ export default function SharedPromptClient({
             />
           </div>
 
-          {/* Right — output */}
+          {/* Right: output */}
           <div className="w-full md:w-1/2 min-h-[400px] md:min-h-0 border-r border-border/50">
             <OutputPanel
               output={output}

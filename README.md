@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PromptKit
 
-## Getting Started
+Shareable, versionable prompts for the Gemini API. The thing AI Studio is missing.
 
-First, run the development server:
+**[Live demo](https://promptkit-seven.vercel.app)**
+
+## What it does
+
+PromptKit is CodePen for prompts. Author a prompt with a system instruction, user prompt, model, and temperature. Run it against the Gemini API. Hit Save and get a permanent shareable URL that captures the full state. Anyone can fork your prompt to remix it, and the fork chain becomes a visible version history with side-by-side diffs between any two versions.
+
+![PromptKit screenshot](docs/screenshot.png)
+
+## Why it exists
+
+AI Studio is the right surface for prompt engineering, but the collaborative layer is missing. There is no version history, no diff between iterations, no shareable URL that captures the full prompt state. PromptKit fills that gap.
+
+## Stack
+
+Next.js 16, Tailwind v4, shadcn/ui (Base UI), Supabase Postgres, @google/generative-ai SDK, Vercel.
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# 1. Clone and install
+git clone https://github.com/dsapru/promptkit
+cd promptkit
+pnpm install
+
+# 2. Add environment variables
+cp .env.local.example .env.local
+# Fill in GEMINI_API_KEY, NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+
+# 3. Set up the database (run in Supabase SQL editor)
+# See schema below
+
+# 4. Seed the featured example
+pnpm seed
+
+# 5. Run locally
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Database schema
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sql
+create table prompts (
+  id uuid primary key default gen_random_uuid(),
+  parent_id uuid references prompts(id),
+  title text,
+  system_instruction text,
+  user_prompt text not null,
+  model text not null,
+  temperature real not null,
+  output text,
+  edit_token text not null,
+  created_at timestamptz default now()
+);
+create index on prompts (parent_id);
+alter table prompts enable row level security;
+create policy "anyone can read" on prompts for select using (true);
+create policy "anyone can insert" on prompts for insert with check (true);
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Built with
 
-## Learn More
+Antigravity, in 48 hours over a weekend.
 
-To learn more about Next.js, take a look at the following resources:
+## License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT

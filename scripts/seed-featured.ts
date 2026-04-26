@@ -1,5 +1,5 @@
 /**
- * Seed script — inserts the featured "Brain dump to PRD" prompt into Supabase
+ * Seed script: inserts the featured "Brain dump to PRD" prompt into Supabase
  * and prints the ID to hardcode in src/components/Hero.tsx.
  *
  * Usage:
@@ -30,7 +30,7 @@ function parseEnvFile(path: string): Record<string, string> {
       env[key] = val
     }
   } catch {
-    // file not found — will fail on the validation below
+    // file not found, will fail on the validation below
   }
   return env
 }
