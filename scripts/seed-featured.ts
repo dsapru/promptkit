@@ -75,37 +75,41 @@ Rules:
 const USER_PROMPT = `We keep losing customers in onboarding. Our setup wizard has 7 steps and takes 8 minutes on average. Time to first value is too long. Want to redesign for time-to-first-value under 90 seconds. Mobile is most affected. Engineering bandwidth is one designer plus two engineers for six weeks.`
 
 // ── Insert ─────────────────────────────────────────────────────────────────────
-const supabase = createClient(supabaseUrl, supabaseKey)
-const editToken = randomBytes(18).toString('base64url').slice(0, 24)
+async function main() {
+  const supabase = createClient(supabaseUrl, supabaseKey)
+  const editToken = randomBytes(18).toString('base64url').slice(0, 24)
 
-console.log('⏳  Inserting featured prompt into Supabase…')
+  console.log('⏳  Inserting featured prompt into Supabase…')
 
-const { data, error } = await supabase
-  .from('prompts')
-  .insert({
-    title: 'Brain dump to PRD',
-    system_instruction: SYSTEM_INSTRUCTION,
-    user_prompt: USER_PROMPT,
-    model: 'gemini-2.5-pro',
-    temperature: 0.4,
-    output: null,
-    parent_id: null,
-    edit_token: editToken,
-  })
-  .select('id')
-  .single()
+  const { data, error } = await supabase
+    .from('prompts')
+    .insert({
+      title: 'Brain dump to PRD',
+      system_instruction: SYSTEM_INSTRUCTION,
+      user_prompt: USER_PROMPT,
+      model: 'gemini-2.5-pro',
+      temperature: 0.4,
+      output: null,
+      parent_id: null,
+      edit_token: editToken,
+    })
+    .select('id')
+    .single()
 
-if (error) {
-  console.error('❌  Supabase error:', error.message)
-  process.exit(1)
+  if (error) {
+    console.error('❌  Supabase error:', error.message)
+    process.exit(1)
+  }
+
+  console.log('\n✅  Featured prompt seeded!')
+  console.log(`   Prompt ID  : ${data.id}`)
+  console.log(`   Edit token : ${editToken}`)
+  console.log(`   Public URL : /p/${data.id}`)
+  console.log()
+  console.log('👉  Now hardcode the ID in src/components/Hero.tsx:')
+  console.log()
+  console.log(`   const FEATURED_PROMPT_ID = '${data.id}'`)
+  console.log()
 }
 
-console.log('\n✅  Featured prompt seeded!')
-console.log(`   Prompt ID  : ${data.id}`)
-console.log(`   Edit token : ${editToken}`)
-console.log(`   Public URL : /p/${data.id}`)
-console.log()
-console.log('👉  Now hardcode the ID in src/components/Hero.tsx:')
-console.log()
-console.log(`   const FEATURED_PROMPT_ID = '${data.id}'`)
-console.log()
+main()
