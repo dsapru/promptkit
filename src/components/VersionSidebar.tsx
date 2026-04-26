@@ -30,7 +30,7 @@ export default function VersionSidebar({
   if (versions.length === 0) return null
 
   return (
-    <aside className="w-72 shrink-0 border-l border-border/50 bg-background flex flex-col">
+    <aside className="w-full md:w-72 shrink-0 border-t md:border-t-0 md:border-l border-border/50 bg-background flex flex-col">
       <div className="px-4 py-3 border-b border-border/50">
         <div className="flex items-center gap-2">
           <GitBranch className="w-3.5 h-3.5 text-muted-foreground" />

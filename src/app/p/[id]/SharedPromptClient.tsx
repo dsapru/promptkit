@@ -168,7 +168,7 @@ export default function SharedPromptClient({
   return (
     <main className="flex flex-col min-h-screen">
       {/* Top bar */}
-      <header className="flex items-center gap-3 px-5 py-3 border-b border-border/50 bg-background/90 backdrop-blur-sm sticky top-0 z-10">
+      <header className="flex items-center gap-2 px-4 py-3 border-b border-border/50 bg-background/90 backdrop-blur-sm sticky top-0 z-10 overflow-hidden">
         <a
           href="/"
           className="flex items-center gap-2 text-sm font-semibold text-foreground/80 hover:text-foreground transition-colors"
@@ -179,9 +179,9 @@ export default function SharedPromptClient({
           PromptKit
         </a>
 
-        <span className="text-border/80">/</span>
+        <span className="text-border/80 hidden sm:inline">/</span>
 
-        <span className="text-sm text-muted-foreground truncate max-w-[200px]">
+        <span className="text-sm text-muted-foreground truncate max-w-[120px] sm:max-w-[200px] hidden sm:inline">
           {prompt.title || `Prompt ${prompt.id.slice(0, 8)}…`}
         </span>
 
@@ -191,11 +191,11 @@ export default function SharedPromptClient({
           </Badge>
         )}
 
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ml-auto flex items-center gap-2 shrink-0">
           {ancestors.length > 0 && (
-            <div className="flex items-center gap-1.5 text-xs text-muted-foreground/60">
+            <div className="hidden sm:flex items-center gap-1.5 text-xs text-muted-foreground/60">
               <GitBranch className="w-3 h-3" />
-              <span>{ancestors.length + 1} version{ancestors.length > 0 ? 's' : ''}</span>
+              <span>{ancestors.length + 1} versions</span>
             </div>
           )}
 
@@ -217,13 +217,13 @@ export default function SharedPromptClient({
             className="flex items-center gap-1 px-3 py-1.5 rounded-md border border-border/60 hover:border-border text-xs text-muted-foreground hover:text-foreground transition-all duration-150"
           >
             <ExternalLink className="w-3 h-3" />
-            New prompt
+            <span className="hidden sm:inline">New prompt</span>
           </a>
         </div>
       </header>
 
       {/* Main content */}
-      <div className="flex flex-1">
+      <div className="flex flex-col md:flex-row flex-1">
         {/* Two-pane split */}
         <div className="flex flex-col md:flex-row flex-1 max-w-[1400px] w-full mx-auto">
           {/* Left — editor */}
