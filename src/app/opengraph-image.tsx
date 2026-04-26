@@ -7,42 +7,37 @@ export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
 export default async function Image() {
-  // Font bundled locally — no network dependency at build time
-  // Download: curl -sL https://fonts.bunny.net/inter/files/inter-latin-600-normal.woff \
-  //           -o public/fonts/Inter-SemiBold.woff
+  // Font bundled locally — no network dependency at build time.
+  // One-time setup: curl -sL https://fonts.bunny.net/inter/files/inter-latin-600-normal.woff \
+  //                      -o public/fonts/Inter-SemiBold.woff
   const fontData = await readFile(
     join(process.cwd(), 'public', 'fonts', 'Inter-SemiBold.woff')
   )
 
   return new ImageResponse(
     (
+      // Root — Satori rule: every element with >1 child MUST have display:flex
       <div
         style={{
           width: '100%',
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          backgroundColor: '#09090b',
+          // Subtle radial gradient baked into the background
+          background:
+            'radial-gradient(ellipse 70% 60% at 50% -10%, rgba(124,58,237,0.20) 0%, transparent 70%), #09090b',
           padding: '72px 80px 60px',
         }}
       >
-        {/* Top gradient glow */}
+        {/* Logo row */}
         <div
           style={{
-            position: 'absolute',
-            top: -120,
-            left: 300,
-            width: 700,
-            height: 500,
-            borderRadius: '50%',
-            background:
-              'linear-gradient(180deg, rgba(124,58,237,0.18) 0%, rgba(59,130,246,0.06) 60%, transparent 100%)',
-            filter: 'blur(60px)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+            marginBottom: 52,
           }}
-        />
-
-        {/* Logo row */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 52 }}>
+        >
           <div
             style={{
               width: 36,
@@ -60,7 +55,7 @@ export default async function Image() {
           >
             P
           </div>
-          <span
+          <div
             style={{
               color: '#a1a1aa',
               fontSize: 20,
@@ -69,11 +64,12 @@ export default async function Image() {
             }}
           >
             PromptKit
-          </span>
+          </div>
         </div>
 
-        {/* Headline */}
+        {/* Main area */}
         <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+          {/* Headline line 1 — single text child, no flex needed */}
           <div
             style={{
               fontSize: 76,
@@ -86,6 +82,8 @@ export default async function Image() {
           >
             Stop pasting prompts
           </div>
+
+          {/* Headline line 2 — violet accent */}
           <div
             style={{
               fontSize: 76,
@@ -100,21 +98,20 @@ export default async function Image() {
             into Slack.
           </div>
 
-          {/* Subheading */}
+          {/* Subhead — single text string, avoids mixed text+element children */}
           <div
             style={{
               fontSize: 28,
-              color: '#52525b',
+              color: '#71717a',
               fontFamily: 'Inter',
               lineHeight: 1.5,
             }}
           >
-            PromptKit: shareable, versionable prompts for the Gemini API.{' '}
-            <span style={{ color: '#71717a' }}>Like CodePen, for prompts.</span>
+            PromptKit: shareable, versionable prompts for the Gemini API. Like CodePen, for prompts.
           </div>
         </div>
 
-        {/* Footer row */}
+        {/* Footer — two children, must be flex */}
         <div
           style={{
             display: 'flex',
@@ -124,12 +121,12 @@ export default async function Image() {
             paddingTop: 24,
           }}
         >
-          <span style={{ color: '#3f3f46', fontSize: 18, fontFamily: 'Inter' }}>
+          <div style={{ color: '#3f3f46', fontSize: 18, fontFamily: 'Inter' }}>
             Built with Antigravity
-          </span>
-          <span style={{ color: '#3f3f46', fontSize: 18, fontFamily: 'Inter' }}>
+          </div>
+          <div style={{ color: '#3f3f46', fontSize: 18, fontFamily: 'Inter' }}>
             promptkit-seven.vercel.app
-          </span>
+          </div>
         </div>
       </div>
     ),
